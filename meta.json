@@ -1,5 +1,5 @@
 {
-  "module_id": "4a34cd30-a8d3-472f-acb3-0718d608c3f8:fake-modules-python",
+  "module_id": "rand:fake-modules-python",
   "visibility": "public",
   "url": "https://github.com/randhid/fake-modules/",
   "description": "a repo of fake modules written in python",
