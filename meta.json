@@ -1,0 +1,13 @@
+{
+    "module_id": "rand:fake-modules",
+    "visibility": "public",
+    "url": "https://github.com/randhid/fake-modules",
+    "description": "A repo of fake python modules",
+    "models": [
+        {
+            "api": "rdk:component:arm",
+            "model": "rand:fake:arm"
+        }
+    ],
+    "entrypoint": "run.sh"
+}
