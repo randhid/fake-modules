@@ -16,7 +16,7 @@ import asyncio
 LOGGER = getLogger(__name__)
 
 class fake_arm(Arm, Reconfigurable):
-    MODEL: ClassVar[Model] = Model(ModelFamily("rand", "experiments"), "fake_arm")
+    MODEL: ClassVar[Model] = Model(ModelFamily("rand", "fake"), "arm")
     
     # create any class parameters here, 'some_pin' is used as an example (change/add as needed)
     some_pin: int
