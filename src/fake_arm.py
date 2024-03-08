@@ -1,14 +1,12 @@
-from locale import normalize
-from operator import truediv
 from random import random
 from time import sleep
-from typing import ClassVar, Mapping, Any, Dict, Optional, Tuple
+from typing import ClassVar, Mapping, Any, Dict, Optional, Tuple, List
 from typing_extensions import Self
 
 
 from viam.module.types import Reconfigurable
 from viam.proto.app.robot import ComponentConfig
-from viam.proto.common import ResourceName, Vector3
+from viam.proto.common import ResourceName, Vector3, Geometry
 from viam.resource.base import ResourceBase
 from viam.resource.types import Model, ModelFamily
 
@@ -17,7 +15,7 @@ from viam.logging import getLogger
 
 LOGGER = getLogger(__name__)
 
-class fake_arm(Arm, Reconfigurable):
+class FakeArm(Arm, Reconfigurable):
     MODEL: ClassVar[Model] = Model(ModelFamily("rand", "fake"), "arm")
     
     pose: Pose(x=0,y=0,z=0, o_x=0, o_y=0, o_z=1, theta=0)
@@ -50,7 +48,7 @@ class fake_arm(Arm, Reconfigurable):
         timeout: Optional[float] = None,
         **kwargs,
     ) -> Pose:
-        return Pose(x=1, y=2, z=3, o_x=0, oy=1, o_z=0, theta=45)
+        return Pose(x=1, y=2, z=3, o_x=0, o_y=1, o_z=0, theta=45)
 
     
     async def move_to_position(
@@ -117,9 +115,12 @@ class fake_arm(Arm, Reconfigurable):
 
     
     async def get_kinematics(self, *, timeout: Optional[float] = None, **kwargs) -> Tuple[KinematicsFileFormat.ValueType, bytes]:
-        f = open("src/dofbot.json", "rb")
+        f = open("src/kinematics.json", "rb")
 
         data = f.read()
         f.close()
         return (KinematicsFileFormat.KINEMATICS_FILE_FORMAT_SVA, data)
+
+    async def get_geometries(self, *, extra: Optional[Dict[str, Any]] = None, timeout: Optional[float] = None) -> List[Geometry]:
+        pass
 

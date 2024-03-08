@@ -3,7 +3,12 @@ import sys
 
 from viam.components.arm import Arm
 from viam.module.module import Module
-from .fake_arm import fake_arm
+from fake_arm import FakeArm
+
+from viam.components.arm import Arm
+from viam.resource.registry import Registry, ResourceCreatorRegistration
+
+from fake_arm import FakeArm
 
 async def main(address: str):
     """This function creates and starts a new module, after adding all desired resources.
@@ -11,8 +16,11 @@ async def main(address: str):
     Args:
         address (str): The address to serve the module on
     """
+
+    Registry.register_resource_creator(Arm.SUBTYPE, FakeArm.MODEL, ResourceCreatorRegistration(FakeArm.new, FakeArm.validate))
+
     module = Module(address)
-    module.add_model_from_registry(Arm.SUBTYPE, fake_arm.MODEL)
+    module.add_model_from_registry(Arm.SUBTYPE, FakeArm.MODEL)
     await module.start()
 
 if __name__ == "__main__":
